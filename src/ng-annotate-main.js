@@ -16,7 +16,7 @@ const scopeTools = require("./scopetools");
 const stringmap = require("stringmap");
 const optionalAngularDashboardFramework = require("./optionals/angular-dashboard-framework");
 const require_acorn_t0 = Date.now();
-const parser = require("acorn").parse;
+const parser = require('acorn-dynamic-import/lib/inject').default(require('acorn')).parse;
 const require_acorn_t1 = Date.now();
 
 const chainedRouteProvider = 1;
@@ -1111,6 +1111,7 @@ module.exports = function ngAnnotate(src, options) {
             locations: true,
             ranges: true,
             onComment: comments,
+            plugins: { dynamicImport: true },
         }, options.acornOptions));
         stats.parser_parse_t1 = Date.now();
     } catch(e) {

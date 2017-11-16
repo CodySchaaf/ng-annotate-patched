@@ -10,7 +10,10 @@ module.exports = function traverse(rootNode, options) {
         const isNew = node !== parent;
         if (options.pre && isNew) options.pre(node, parent);
         if (isNew) ancestors.push(node);
-        walk.base[override || node.type](node, st, c);
+        let fn = override || node.type;
+        // Since Import isn't part of default acorn, using closest match
+        if (fn === "Import") { fn = "ImportSpecifier"}
+        walk.base[fn](node, st, c);
         if (isNew) ancestors.pop();
         if (options.post && isNew) options.post(node, parent);
     })(rootNode);
